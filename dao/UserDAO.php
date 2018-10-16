@@ -7,13 +7,13 @@
 
         public function insert(User $user){
 
-            $sql = "INSERT INTO Users (login, password, permission) VALUES (:login, :password, :permission);";
+            $sql = "INSERT INTO Users (userLogin, userPassword, permission) VALUES (:userLogin, :userPassword, :permission);";
             $pdo = PDOFactory::getConnection();
 
             $command = $pdo->prepare($sql);
             
-            $command->bindParam(":login", $user->login);
-            $command->bindParam(":password", $user->password);
+            $command->bindParam(":userLogin", $user->login);
+            $command->bindParam(":userPassword", $user->password);
             $command->bindParam(":permission", $user->permission);
 
             $command->execute();
@@ -37,7 +37,7 @@
 
             while($row = $command->fetch(PDO::FETCH_OBJ)){
 
-                $users[] = new User($row->idUser, $row->login, $row->password, $row->permission);
+                $users[] = new User($row->idUser, $row->userLogin, $row->userPassword, $row->permission);
 
             }
 
@@ -47,13 +47,13 @@
 
         public function update(){
 
-            $sql = "UPDATE FROM Users login=:login, password=:password, permission=:permission WHERE idUser=:idUser";
+            $sql = "UPDATE FROM Users userLogin=:userLogin, userPassword=:userPassword, permission=:permission WHERE idUser=:idUser";
             $pdo = PDOFactory::getConnection();
 
             $command = $pdo->prepare($sql);
 
-            $command->bindParam(":login", $user->login);
-            $command->bindParam(":password", $user->password);
+            $command->bindParam(":userLogin", $user->login);
+            $command->bindParam(":userPassword", $user->password);
             $command->bindParam(":permission", $user->permission);
 
             $command->execute();
@@ -85,7 +85,7 @@
 
             $result = $command->fetch(PDO::FETCH_OBJ);
 
-            return new User($result->idUser, $result->login, $result->password, $result->permission);
+            return new User($result->idUser, $result->userLogin, $result->userPassword, $result->permission);
 
         }
 

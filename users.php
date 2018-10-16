@@ -1,5 +1,8 @@
 <?php
 
+    header('Access-Control-Allow-Origin: *');
+    header('Content-type: application/json');
+
     include_once 'class/User.php';
     include_once 'dao/UserDAO.php';
 
@@ -47,7 +50,7 @@
             $data = file_get_contents("php://input");
             $var = json_decode($data);
 
-            $user = new User(0, $var->login, $var->password, $var->permission);
+            $user = new User(0, $var->userLogin, $var->userPassword, $var->permission);
 
             $dao = new UserDAO;
 
@@ -69,9 +72,9 @@
                 $data = file_get_contents("php://input");
                 $var = json_decode($data);
 
-                $user = new User($idUser, $var->login, $var->password, $var->permission);
+                $user = new User($idUser, $var->userLogin, $var->userPassword, $var->permission);
 
-                $dao = new UsuerDAO;
+                $dao = new UserDAO;
                 $dao->update($user);
 
                 $user_json = json_encode($user);
@@ -103,9 +106,9 @@
 
             }
 
-            default:
-                header('HTTP/1.1 405 Method Not Allowed');
-                break;
+        default:
+            header('HTTP/1.1 405 Method Not Allowed');
+            break;
 
     }
 
